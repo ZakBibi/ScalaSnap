@@ -2,24 +2,24 @@ package snap
 
 import org.scalatest.flatspec.AnyFlatSpec
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 class SnapSpec extends AnyFlatSpec {
 
   private val snap = new Snap(2)
 
   it can "play a card" in {
-    val playerHand = ListBuffer(
+    val playerHand = List((1, ArrayBuffer(
       Card("Ace", "Hearts"),
       Card("2", "Spades"),
       Card("3", "Diamonds"),
       Card("4", "Clubs")
-    )
+    )))
 
     snap.playCard(playerHand)
     assert(
       snap.pile == ListBuffer(Card("Ace", "Hearts")) &&
-      playerHand.head == Card("2", "Spades")
+      playerHand.head == (1, ArrayBuffer(Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")))
     )
   }
 
@@ -40,11 +40,32 @@ class SnapSpec extends AnyFlatSpec {
 
   it should "pick up pile" in {
     val pile = ListBuffer(Card("Ace", "Spades"))
-    val playerHand = ListBuffer(Card("2", "Hearts"))
+    val playerHand = List((1, ArrayBuffer(Card("2", "Hearts"))))
     snap.pickUpPile(pile, playerHand)
-    assert(playerHand == ListBuffer(Card("2", "Hearts"), Card("Ace", "Spades")) &&
+    assert(playerHand == List((1, ArrayBuffer(Card("2", "Hearts"), Card("Ace", "Spades")))) &&
     pile.isEmpty)
   }
 
+  it should "check winner" in {
+    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")
+    )
+    val playerHands = List(
+      (1, ArrayBuffer[Card]()),
+      (2, ArrayBuffer[Card]()),
+      (3, ArrayBuffer[Card](Card("2", "Hearts"), Card("Ace", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")))
+    )
+    assert(snap.checkWinner(playerHands, deck.length) == 3)
+  }
+
+  it should "return null if there is no winner" in {
+    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")
+    )
+    val playerHands = List(
+      (1, ArrayBuffer[Card]()),
+      (2, ArrayBuffer[Card](Card("2", "Hearts"), Card("Ace", "Spades"))),
+      (3, ArrayBuffer[Card](Card("3", "Diamonds"), Card("4", "Clubs")))
+    )
+    assert(snap.checkWinner(playerHands, deck.length) == 0)
+  }
 
 }

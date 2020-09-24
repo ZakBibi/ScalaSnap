@@ -1,5 +1,7 @@
 package snap
 
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 class Deck {
@@ -22,14 +24,15 @@ class Deck {
     result
   }
 
-  val deck: List[Card] = constructDeck()
+  val deck: mutable.Buffer[Card] = constructDeck()
 
-  private def constructDeck(): List[Card] = {
+  private def constructDeck(): mutable.Buffer[Card] = {
     val suits = Set("Hearts", "Clubs", "Diamonds", "Spades")
     val ranks = List("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King")
-    for (r <- ranks; s <- suits) yield Card(r, s)
+    val cards = for (r <- ranks; s <- suits) yield Card(r, s)
+    cards.toBuffer
   }
 
-  def shuffle(): List[Card] = Random.shuffle(deck)
+  def shuffle(): mutable.Buffer[Card] = Random.shuffle(deck)
 
 }
