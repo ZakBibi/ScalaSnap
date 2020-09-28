@@ -22,7 +22,7 @@ object SnapRunner {
     }
 
     if (game.checkWinner(playerHands, cards.length) != 0)
-      println("Player " + game.checkWinner(playerHands, cards.length) + " won!")
+      println(s"Player ${game.checkWinner(playerHands, cards.length)} won!")
 
   }
 
