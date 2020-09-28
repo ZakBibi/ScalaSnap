@@ -47,8 +47,7 @@ class SnapSpec extends AnyFlatSpec {
   }
 
   it should "check winner" in {
-    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")
-    )
+    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs"))
     val playerHands = List(
       (1, ArrayBuffer[Card]()),
       (2, ArrayBuffer[Card]()),

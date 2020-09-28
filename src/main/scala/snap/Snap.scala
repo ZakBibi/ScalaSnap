@@ -21,6 +21,8 @@ class Snap(private val numberOfPlayers: Int) {
   }
 
   def pickUpPile(pile: ListBuffer[Card], playerHand: (Int, mutable.Buffer[Card])): Unit = {
+    if (playerHand._2.isEmpty)
+      playerHand._2 ++= pile
     playerHand._2 ++= pile
     pile.clear()
   }
@@ -33,4 +35,5 @@ class Snap(private val numberOfPlayers: Int) {
     else
       0
   }
+
 }
