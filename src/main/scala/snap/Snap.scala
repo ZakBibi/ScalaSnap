@@ -9,8 +9,10 @@ class Snap(private val numberOfPlayers: Int) {
   var pile: ListBuffer[Card] = ListBuffer[Card]()
 
   def playCard(playerHand: (Int, mutable.Buffer[Card])): Unit = {
-    pile += playerHand._2.head
-    playerHand._2 -= playerHand._2.head
+    if (playerHand._2.nonEmpty) {
+      pile += playerHand._2.head
+      playerHand._2 -= playerHand._2.head
+    }
   }
 
   def matchCard(pile: ListBuffer[Card]): Boolean = {
@@ -21,8 +23,6 @@ class Snap(private val numberOfPlayers: Int) {
   }
 
   def pickUpPile(pile: ListBuffer[Card], playerHand: (Int, mutable.Buffer[Card])): Unit = {
-    if (playerHand._2.isEmpty)
-      playerHand._2 ++= pile
     playerHand._2 ++= pile
     pile.clear()
   }

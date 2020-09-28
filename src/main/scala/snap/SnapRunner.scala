@@ -1,6 +1,6 @@
 package snap
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ListBuffer
 
 object SnapRunner {
 
@@ -17,8 +17,6 @@ object SnapRunner {
 
       playSnap(game, playerHands)
 
-      checkEmptyPlayerHands(game, playerHands)
-
     }
 
     if (game.checkWinner(playerHands, cards.length) != 0)
@@ -27,20 +25,18 @@ object SnapRunner {
   }
 
   private[snap] def playSnap(game: Snap, playerHands: List[(Int, mutable.Buffer[Card])]): Unit = {
-    playerHands.indices.foreach { h =>
-      checkEmptyPlayerHands(game, playerHands)
-      game.playCard(playerHands(h))
+    playerHands.foreach { playerHand: (Int, mutable.Buffer[Card]) =>
+      pickUpPileIfHandIsEmpty(game, game.pile, playerHand)
+      game.playCard(playerHand)
       if (game.matchCard(game.pile)) {
-        game.pickUpPile(game.pile, playerHands(h))
+        game.pickUpPile(game.pile, playerHand)
       }
     }
   }
 
-  private[snap] def checkEmptyPlayerHands(game: Snap, playerHands: List[(Int, mutable.Buffer[Card])]): Unit = {
-    playerHands.foreach { e =>
-      if (e._2 == ArrayBuffer[Card]())
-        game.pickUpPile(game.pile, e)
-    }
+  private[snap] def pickUpPileIfHandIsEmpty(game: Snap, pile: ListBuffer[Card], playerHand:(Int, mutable.Buffer[Card])): Unit = {
+      if (playerHand._2.isEmpty )
+        game.pickUpPile(pile, playerHand)
   }
 
 }
