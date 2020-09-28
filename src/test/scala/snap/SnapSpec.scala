@@ -9,17 +9,17 @@ class SnapSpec extends AnyFlatSpec {
   private val snap = new Snap(2)
 
   it can "play a card" in {
-    val playerHand = List((1, ArrayBuffer(
+    val playerHand = (1, ArrayBuffer(
       Card("Ace", "Hearts"),
       Card("2", "Spades"),
       Card("3", "Diamonds"),
       Card("4", "Clubs")
-    )))
+    ))
 
     snap.playCard(playerHand)
     assert(
       snap.pile == ListBuffer(Card("Ace", "Hearts")) &&
-      playerHand.head == (1, ArrayBuffer(Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")))
+      playerHand == (1, ArrayBuffer(Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")))
     )
   }
 
@@ -40,9 +40,9 @@ class SnapSpec extends AnyFlatSpec {
 
   it should "pick up pile" in {
     val pile = ListBuffer(Card("Ace", "Spades"))
-    val playerHand = List((1, ArrayBuffer(Card("2", "Hearts"))))
+    val playerHand = (1, ArrayBuffer(Card("2", "Hearts")))
     snap.pickUpPile(pile, playerHand)
-    assert(playerHand == List((1, ArrayBuffer(Card("2", "Hearts"), Card("Ace", "Spades")))) &&
+    assert(playerHand == (1, ArrayBuffer(Card("2", "Hearts"), Card("Ace", "Spades"))) &&
     pile.isEmpty)
   }
 
@@ -58,8 +58,7 @@ class SnapSpec extends AnyFlatSpec {
   }
 
   it should "return null if there is no winner" in {
-    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs")
-    )
+    val deck = ListBuffer(Card("Ace", "Hearts"), Card("2", "Spades"), Card("3", "Diamonds"), Card("4", "Clubs"))
     val playerHands = List(
       (1, ArrayBuffer[Card]()),
       (2, ArrayBuffer[Card](Card("2", "Hearts"), Card("Ace", "Spades"))),

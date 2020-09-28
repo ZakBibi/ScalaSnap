@@ -17,7 +17,7 @@ class DealerSpec extends AnyFlatSpec {
   )
 
   it should "deal 2 hands" in {
-    val dealt_hands = Dealer.dealHands(deck, 2)
+    val dealt_hands = Dealer.dealHands(2, deck)
     assert(
       dealt_hands.head == (1, ArrayBuffer(Card("Ace", "Hearts"), Card("3", "Hearts"), Card("5", "Hearts"))) &&
       dealt_hands(1) == (2, ArrayBuffer(Card("2", "Hearts"), Card("4", "Hearts"), Card("6", "Hearts")))
@@ -25,7 +25,7 @@ class DealerSpec extends AnyFlatSpec {
   }
 
   it should "deal 3 hands" in {
-    val dealt_hands = Dealer.dealHands(deck, 3)
+    val dealt_hands = Dealer.dealHands(3, deck)
     assert(
         dealt_hands.head == (1, ArrayBuffer(Card("Ace", "Hearts"), Card("4", "Hearts"))) &&
         dealt_hands(1) == (2, ArrayBuffer(Card("2", "Hearts"), Card("5", "Hearts"))) &&
@@ -42,7 +42,7 @@ class DealerSpec extends AnyFlatSpec {
       Card("5", "Hearts")
     )
 
-    val dealt_hands = Dealer.dealHands(unevenDeck, 3)
+    val dealt_hands = Dealer.dealHands(3, unevenDeck)
     assert(
       dealt_hands.head == (1, ArrayBuffer(Card("Ace", "Hearts"), Card("4", "Hearts"))) &&
         dealt_hands(1) == (2, ArrayBuffer(Card("2", "Hearts"), Card("5", "Hearts"))) &&
