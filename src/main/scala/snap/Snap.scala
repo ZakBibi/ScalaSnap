@@ -8,9 +8,11 @@ class Snap(private val numberOfPlayers: Int) {
   val dealer: Dealer.type = Dealer
   var pile: ListBuffer[Card] = ListBuffer[Card]()
 
-  def playCard(playerHand: List[(Int, mutable.Buffer[Card])]): Unit = {
-    pile += playerHand.head._2.head
-    playerHand.head._2 -= playerHand.head._2.head
+  def playCard(playerHand: (Int, mutable.Buffer[Card])): Unit = {
+    if (playerHand._2.nonEmpty) {
+      pile += playerHand._2.head
+      playerHand._2 -= playerHand._2.head
+    }
   }
 
   def matchCard(pile: ListBuffer[Card]): Boolean = {
@@ -20,8 +22,8 @@ class Snap(private val numberOfPlayers: Int) {
       pile.last.rank == pile.init.last.rank
   }
 
-  def pickUpPile(pile: ListBuffer[Card], playerHand: List[(Int, mutable.Buffer[Card])]): Unit = {
-    playerHand.head._2.addAll(pile)
+  def pickUpPile(pile: ListBuffer[Card], playerHand: (Int, mutable.Buffer[Card])): Unit = {
+    playerHand._2 ++= pile
     pile.clear()
   }
 
@@ -33,4 +35,5 @@ class Snap(private val numberOfPlayers: Int) {
     else
       0
   }
+
 }
