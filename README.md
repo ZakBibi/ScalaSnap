@@ -8,8 +8,14 @@ It includes:
 - **The Dealer**
 - **The Game**
 
-**What's next for Scala Snap?**
+**How To Run**
 
-Implementing a runner!
+Scala Snap runs on the command line. Here's how to run it:
 
-_Thanks for checking it out!_
+- Clone repo
+- from where you cloned it: `cd scalaSnap/src/main/scala/snap`
+- `scalac SnapRunner.scala`
+- `scala SnapRunner [number of players]`
+- And finally watch which player wins!
+
+Hope you enjoy!
